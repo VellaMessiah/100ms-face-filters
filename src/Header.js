@@ -4,11 +4,12 @@ import {
   useHMSStore,
 } from "@100mslive/hms-video-react";
 import React from "react";
-import { grayScalePlugin, PluginButton } from "./plugin";
+import { brightnessPlugin, grayScalePlugin, PluginButton } from "./plugin";
 
 function Header() {
   const isConnected = useHMSStore(selectIsConnectedToRoom);
   const hmsActions = useHMSActions();
+  
 
   return (
     <header>
@@ -19,7 +20,8 @@ function Header() {
       />
       {isConnected && (
         <div>
-          <PluginButton plugin={grayScalePlugin} name={"Grayscale"} />
+          <PluginButton plugin={brightnessPlugin} name={"Brightness"} framerate={15}/>
+          <PluginButton plugin={grayScalePlugin} name={"Grayscale"} framerate={15}/>
           <button
             id="leave-btn"
             className="btn btn-danger"

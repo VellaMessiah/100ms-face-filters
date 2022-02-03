@@ -1,8 +1,8 @@
 import { HMSVideoPluginType } from "@100mslive/hms-video";
 
-export class GrayscalePlugin {
+export class BrightnessPlugin {
   getName() {
-    return "grayscale-plugin";
+    return "brightness-plugin";
   }
 
   isSupported() {
@@ -20,9 +20,8 @@ export class GrayscalePlugin {
   /**
    * @param input {HTMLCanvasElement}
    * @param output {HTMLCanvasElement}
-   * @param skipProcessing {boolean}
    */
-  processVideoFrame(input, output, skipProcessing=true) {
+  processVideoFrame(input, output) {
     const width = input.width;
     const height = input.height;
     output.width = width;
@@ -30,8 +29,9 @@ export class GrayscalePlugin {
     const inputCtx = input.getContext("2d");
     const outputCtx = output.getContext("2d");
     let imgData = inputCtx.getImageData(0, 0, width, height);
+
     outputCtx.putImageData(
-      new ImageData( window.convertPixels(imgData.data, imgData.data.length), width, height)
-      , 0, 0);
+        new ImageData( window.adjustBrightness(imgData.data, imgData.data.length), width, height)
+        , 0, 0);
   }
 }

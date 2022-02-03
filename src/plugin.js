@@ -5,17 +5,19 @@ import {
   useHMSStore,
 } from "@100mslive/hms-video-react";
 import React from "react";
+import { BrightnessPlugin } from "./plugins/brightnessPlugin";
 
 export const grayScalePlugin = new GrayscalePlugin();
-export function PluginButton({ plugin, name }) {
+export const brightnessPlugin = new BrightnessPlugin();
+export function PluginButton({ plugin, name, framerate }) {
   const isPluginAdded = useHMSStore(
-    selectIsLocalVideoPluginPresent(grayScalePlugin.getName())
+    selectIsLocalVideoPluginPresent(plugin.getName())
   );
   const hmsActions = useHMSActions();
 
   const togglePluginState = async () => {
     if (!isPluginAdded) {
-      await hmsActions.addPluginToVideoTrack(plugin);
+      await hmsActions.addPluginToVideoTrack(plugin, framerate);
     } else {
       await hmsActions.removePluginFromVideoTrack(plugin);
     }
